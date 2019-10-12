@@ -11,7 +11,7 @@ namespace AngularJSAuthentication.API.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(AngularJSAuthentication.API.AuthContext context)
@@ -43,8 +43,8 @@ namespace AngularJSAuthentication.API.Migrations
                 new Client
                 {
                     Id = "ngAuthAppDev",
-                    Secret= Helper.GetHash("abc@123"),
-                    Name="AngularJS front-end Application",
+                    Secret= Helper.GetHash("abc_dev@123"),
+                    Name="AngularJS front-end Application Dev",
                     ApplicationType =  Models.ApplicationTypes.JavaScript,
                     Active = true,
                     RefreshTokenLifeTime = 7200,

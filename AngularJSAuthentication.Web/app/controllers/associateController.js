@@ -19,7 +19,7 @@ app.controller('associateController', ['$scope', '$location','$timeout','authSer
             startTimer();
 
         },
-          function (response) {
+            function (response) {
               var errors = [];
               for (var key in response.modelState) {
                   errors.push(response.modelState[key]);
