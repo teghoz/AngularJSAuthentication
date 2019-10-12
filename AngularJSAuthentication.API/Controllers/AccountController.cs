@@ -103,7 +103,7 @@ namespace AngularJSAuthentication.API.Controllers
                                             externalLogin.ExternalAccessToken,
                                             externalLogin.LoginProvider,
                                             hasRegistered.ToString(),
-                                            externalLogin.UserName);
+                                            externalLogin.Email);
 
             return Redirect(redirectUri);
 
@@ -268,10 +268,14 @@ namespace AngularJSAuthentication.API.Controllers
                 return string.Format("Client_id '{0}' is not registered in the system.", clientId);
             }
 
-            if (!string.Equals(client.AllowedOrigin, redirectUri.GetLeftPart(UriPartial.Authority), StringComparison.OrdinalIgnoreCase))
+            if(client.AllowedOrigin != "*")
             {
-                return string.Format("The given URL is not allowed by Client_id '{0}' configuration.", clientId);
+                if (!string.Equals(client.AllowedOrigin, redirectUri.GetLeftPart(UriPartial.Authority), StringComparison.OrdinalIgnoreCase))
+                {
+                    return string.Format("The given URL is not allowed by Client_id '{0}' configuration.", clientId);
+                }
             }
+            
 
             redirectUriOutput = redirectUri.AbsoluteUri;
 
@@ -302,7 +306,7 @@ namespace AngularJSAuthentication.API.Controllers
             {
                 //You can get it from here: https://developers.facebook.com/tools/accesstoken/
                 //More about debug_tokn here: http://stackoverflow.com/questions/16641083/how-does-one-get-the-app-access-token-for-debug-token-inspection-on-facebook
-                var appToken = "xxxxxx";
+                var appToken = "518558638940888|vRu8VlnnW5GfvUPgcyXm4d046v8";
                 verifyTokenEndPoint = string.Format("https://graph.facebook.com/debug_token?input_token={0}&access_token={1}", accessToken, appToken);
             }
             else if (provider == "Google")
@@ -390,6 +394,7 @@ namespace AngularJSAuthentication.API.Controllers
             public string LoginProvider { get; set; }
             public string ProviderKey { get; set; }
             public string UserName { get; set; }
+            public string Email { get; set; }
             public string ExternalAccessToken { get; set; }
 
             public static ExternalLoginData FromIdentity(ClaimsIdentity identity)
@@ -416,6 +421,7 @@ namespace AngularJSAuthentication.API.Controllers
                     LoginProvider = providerKeyClaim.Issuer,
                     ProviderKey = providerKeyClaim.Value,
                     UserName = identity.FindFirstValue(ClaimTypes.Name),
+                    Email = identity.FindFirstValue(ClaimTypes.Email),
                     ExternalAccessToken = identity.FindFirstValue("ExternalAccessToken"),
                 };
             }
