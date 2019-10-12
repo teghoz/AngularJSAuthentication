@@ -27,7 +27,9 @@ app.controller('loginController', ['$scope', '$location', 'authService', 'ngAuth
 
         var externalProviderUrl = ngAuthSettings.apiServiceBaseUri + "api/Account/ExternalLogin?provider=" + provider
                                                                     + "&response_type=token&client_id=" + ngAuthSettings.clientId
-                                                                    + "&redirect_uri=" + redirectUri;
+            + "&redirect_uri=" + redirectUri;
+        console.log("ngAuthSettings: ", ngAuthSettings);
+        console.log("externalProviderUrl: ", externalProviderUrl);
         window.$windowScope = $scope;
 
         var oauthWindow = window.open(externalProviderUrl, "Authenticate Account", "location=0,status=0,width=600,height=750");

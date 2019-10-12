@@ -31,7 +31,8 @@ namespace AngularJSAuthentication.API.Migrations
             List<Client> ClientsList = new List<Client> 
             {
                 new Client
-                { Id = "ngAuthApp", 
+                {
+                    Id = "ngAuthApp", 
                     Secret= Helper.GetHash("abc@123"), 
                     Name="AngularJS front-end Application", 
                     ApplicationType =  Models.ApplicationTypes.JavaScript, 
@@ -40,7 +41,18 @@ namespace AngularJSAuthentication.API.Migrations
                     AllowedOrigin = "http://ngauthenticationweb.azurewebsites.net"
                 },
                 new Client
-                { Id = "consoleApp", 
+                {
+                    Id = "ngAuthAppDev",
+                    Secret= Helper.GetHash("abc@123"),
+                    Name="AngularJS front-end Application",
+                    ApplicationType =  Models.ApplicationTypes.JavaScript,
+                    Active = true,
+                    RefreshTokenLifeTime = 7200,
+                    AllowedOrigin = "*"
+                },
+                new Client
+                {
+                    Id = "consoleApp", 
                     Secret=Helper.GetHash("123@abc"), 
                     Name="Console Application", 
                     ApplicationType =Models.ApplicationTypes.NativeConfidential, 
